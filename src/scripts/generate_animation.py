@@ -9,7 +9,6 @@ import imageio
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
 animation_dir = Path("./animation/")
 if not os.path.exists("./animation/"):
     animation_dir.mkdir()

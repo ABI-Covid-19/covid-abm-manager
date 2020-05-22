@@ -58,4 +58,3 @@ class AbstractStorePlanner(metaclass=abc.ABCMeta):
         :return:
         """
         pass
-

@@ -15,7 +15,6 @@ class ShopperInstance(type):
 
 
 class Shopper(Agent, metaclass=ShopperInstance):
-
     __id__ = 0
 
     def __init__(self, model, position, exit_cell, state=State.HEALTHY, social_distancing=False):
