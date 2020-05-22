@@ -8,6 +8,7 @@ Required dependencies:
 - mesa
 - pandas
 - numpy
+- dataclass
 
 Optional dependencies:
 
