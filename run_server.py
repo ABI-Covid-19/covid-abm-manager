@@ -1,3 +1,3 @@
-from server.server import server
+from src.server.server import server
 
 server.launch()
