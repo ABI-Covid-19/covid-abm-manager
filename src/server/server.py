@@ -1,6 +1,6 @@
-from model.supermarket import SupermarketModel
-from model.shopper import Shopper
-from visualisation.continuous_module import Canvas
+from src.model.supermarket import SupermarketModel
+from src.model.shopper import Shopper
+from src.visualisation.continuous_module import Canvas
 
 from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.UserParam import UserSettableParameter
