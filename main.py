@@ -1,4 +1,4 @@
-from src.model.supermarket import SupermarketModel
+from model.supermarket import SupermarketModel
 
 
 def run_model(model, steps=300):
