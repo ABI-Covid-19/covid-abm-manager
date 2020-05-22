@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from state.agent_state import State
+from ..state.agent_state import State
 
 
 @dataclass
