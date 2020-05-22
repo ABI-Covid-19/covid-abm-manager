@@ -1,8 +1,8 @@
-from model.model import Model
-from model.store_shelves import StoreShelf
-from model.utils.store import Store
-from model.shopper import Shopper
-from state.agent_state import State
+from model import Model
+from store_shelves import StoreShelf
+from .utils.store import Store
+from shopper import Shopper
+from agent_state import State
 
 from mesa.space import ContinuousSpace
 from mesa.time import RandomActivation
