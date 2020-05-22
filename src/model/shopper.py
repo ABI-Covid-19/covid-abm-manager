@@ -1,7 +1,7 @@
-from model.agent import Agent
-from model.store_shelves import StoreShelf
-from state.agent_state import State
-from data.agent_data import DataRep
+from .agent import Agent
+from .store_shelves import StoreShelf
+from ..state.agent_state import State
+from ..data.agent_data import DataRep
 
 import numpy as np
 
