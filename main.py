@@ -1,9 +1,4 @@
-from src.model.supermarket import SupermarketModel
-
-
-def run_model(model, steps=300):
-    for _ in range(steps):
-        model.step()
+from src.api import SimpleAPI
 
 
 def run_batch():
@@ -14,17 +9,38 @@ def run_batch():
 # TODO: Use argparse for user input arguments.
 
 
+def _model_parameters():
+    params = {
+        'model': 'supermarket',
+        'number': 20,
+        'infected': 1,
+        'prob': 0.7,
+        'size': 'small',
+        'time': 300
+    }
+    return params
+
+
 if __name__ == '__main__':
-    n_customers = 10
-    n_infected = 5
-    social_distance_prob = 0.90
-    time_steps = 2880  # 12 hours (every time step is 15 seconds; i.e. 4*60*12)
+    sapi = SimpleAPI()
 
-    supermarket_model = SupermarketModel(number_of_customers=n_customers,
-                                         number_of_infected=n_infected,
-                                         size='small',
-                                         social_distance_prob=social_distance_prob)
+    """ option 1:
+    pass a dictionary of the model parameters
+    """
+    sapi.set_model_descriptions(_model_parameters())
+    sapi.run_model()
+    # result = sapi.get_model_results()
+    # sapi.save_model_results("supermarket_simulation_results.csv")
 
-    run_model(supermarket_model, steps=time_steps)
-    model_results = supermarket_model.get_simulation_result()
-    model_results.to_csv('supermarket_abm_simulation.csv')
+    """ option 2:
+    explicitly set the model parameters with individual api methods
+    """
+    sapi.set_model('supermarket')
+    sapi.set_number_of_agents(10)
+    sapi.set_number_of_infected(2)
+    sapi.set_social_distance_prob(0.7)
+    sapi.set_store_size('small')
+    sapi.set_time_steps(300)
+    sapi.run_model()
+    # result = sapi.get_model_results()
+    # sapi.save_model_results("supermarket_simulation_results.csv")
