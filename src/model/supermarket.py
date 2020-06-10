@@ -10,7 +10,6 @@ from mesa.datacollection import DataCollector
 
 from dataclasses import asdict
 
-import numpy as np
 import pandas as pd
 
 STORE_SIZES = dict(small=(70, 50),
@@ -25,15 +24,28 @@ class SupermarketModel(Model):
 
     unique_id = 0
 
-    def __init__(self, number_of_customers, number_of_infected, social_distance_prob=0.80,
+    def __init__(self, number_of_customers: list, number_of_infected: list, entry_times: list,
+                 social_distance_prob=0.80,
                  size='small'):
 
         super(SupermarketModel).__init__()
 
-        self._num_customers = number_of_customers
-        self._num_infected = number_of_infected
+        if isinstance(number_of_customers, int):
+            self._num_customers = [number_of_customers]
+        elif isinstance(number_of_customers, (list, tuple)):
+            self._num_customers = number_of_customers
+        if isinstance(number_of_infected, int):
+            self._num_infected = [number_of_infected]
+        elif isinstance(number_of_infected, (list, tuple)):
+            self._num_infected = number_of_infected
+        if isinstance(entry_times, int):
+            self._entry_times = [entry_times]
+        elif isinstance(entry_times, (list, tuple)):
+            self._entry_times = entry_times
+
+        assert len(self._num_customers) == len(self._num_infected) == len(self._entry_times)
+
         self._step_count = 0
-        self._enter_time = 0
 
         #  store environment
         self.width, self.height = STORE_SIZES[size][0] // 2, STORE_SIZES[size][1] // 2
@@ -66,7 +78,9 @@ class SupermarketModel(Model):
             })
 
         #  add shoppers into the supermarket
-        self.add_agents(self._num_customers, self._num_infected)
+        self.add_agents(self._num_customers[0], self._num_infected[0])
+        del self._num_customers[0]
+        del self._num_infected[0]
         self.running = True
         self.datacollector.collect(self)
 
@@ -161,17 +175,12 @@ class SupermarketModel(Model):
         Run the model with one step (day).
         """
         self._step_count += 1
-        self._enter_time += 1
         self._save_data()
         self.schedule.step()
         self.datacollector.collect(self)
 
-        if self._enter_time == 8:
-            number_of_new_customers = np.random.randint(1, 5)
-            is_infected = self.random.random() < 0.1
-            if is_infected:
-                number_of_new_infected = 1
-            else:
-                number_of_new_infected = 0
-            self.add_agents(number_of_new_customers, number_of_new_infected)
-            self._enter_time = 0
+        if self._step_count in self._entry_times:
+            print("{} agents have been added at {}th time step".format(self._num_customers[0], self._step_count))
+            self.add_agents(self._num_customers[0], self._num_infected[0])
+            del self._num_customers[0]
+            del self._num_infected[0]
