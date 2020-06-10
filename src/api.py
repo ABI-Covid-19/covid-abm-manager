@@ -19,6 +19,7 @@ class ModelDescription:
         model = self.__model__[self.__description['model']]
         self._model = model(self.__description['number'],
                             self.__description['infected'],
+                            self.__description['entry_times'],
                             self.__description['prob'],
                             self.__description['size'])
         self.__run()
@@ -40,17 +41,20 @@ class SimpleAPI:
     def __init__(self):
         self._model_description = ModelDescription()
 
-    def set_model_descriptions(self, description):
+    def set_model_descriptions(self, description: dict):
         self._model_description.update_from_json(description)
 
     def set_model(self, model='supermarket'):
         self._model_description.update_description('model', model)
 
-    def set_number_of_agents(self, num=20):
+    def set_number_of_agents(self, num: list):
         self._model_description.update_description('number', num)
 
-    def set_number_of_infected(self, num=1):
+    def set_number_of_infected(self, num: list):
         self._model_description.update_description('infected', num)
+
+    def set_entry_times(self, num: list):
+        self._model_description.update_description('entry_times', num)
 
     def set_social_distance_prob(self, prob=0.7):
         self._model_description.update_description('prob', prob)
@@ -58,13 +62,15 @@ class SimpleAPI:
     def set_store_size(self, size='small'):
         self._model_description.update_description('size', size)
 
-    def set_time_steps(self, time=2880):
+    def set_time_steps(self, time=12):
         """
-        Set time-step. Every time step is 15 seconds.
+        Set time-step.
+        Note that in the model, every step is equivalent to 15 seconds.
 
-        :param time: default is 12 hours.
+        :param time: (in hours) default is 12 hours.
         :return:
         """
+        time = time * 60 * 4  # convert to 15-second multiples
         self._model_description.update_description('time', time)
 
     def run_model(self):
