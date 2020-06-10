@@ -12,8 +12,9 @@ def run_batch():
 def _model_parameters():
     params = {
         'model': 'supermarket',
-        'number': 20,
-        'infected': 1,
+        'number': [20, 10, 10, 15],
+        'infected': [1, 2, 0, 0],
+        'entry_times': [0, 10, 28, 99],
         'prob': 0.7,
         'size': 'small',
         'time': 300
@@ -36,8 +37,9 @@ if __name__ == '__main__':
     explicitly set the model parameters with individual api methods
     """
     sapi.set_model('supermarket')
-    sapi.set_number_of_agents(10)
-    sapi.set_number_of_infected(2)
+    sapi.set_number_of_agents([20, 10, 10, 15])
+    sapi.set_number_of_infected([1, 2, 0, 0])
+    sapi.set_entry_times([0, 10, 28, 99])
     sapi.set_social_distance_prob(0.7)
     sapi.set_store_size('small')
     sapi.set_time_steps(300)
