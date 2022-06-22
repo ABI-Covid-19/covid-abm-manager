@@ -2,6 +2,6 @@ dataclasses==0.7
 imageio==2.5.0
 Mesa==0.8.6
 matplotlib==3.1.1
-numpy==1.16.3
+numpy==1.22.0
 pandas==0.25.3
 tornado==6.0.3
